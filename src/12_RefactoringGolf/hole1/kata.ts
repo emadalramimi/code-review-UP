@@ -111,33 +111,30 @@ class Board {
   }
 
   public Winner(): string {
-    if (this.isRowFull(firstRow) && this.isRowFullWithSameSymbol(firstRow)) {
+    if (this.isRowFullWithSameSymbol(firstRow)) {
       return this.TileAt(firstRow, firstColumn)!.Symbol;
     }
 
-    if (this.isRowFull(secondRow) && this.isRowFullWithSameSymbol(secondRow)) {
+    if (this.isRowFullWithSameSymbol(secondRow)) {
       return this.TileAt(secondRow, firstColumn)!.Symbol;
     }
 
-    if (this.isRowFull(thirdRow) && this.isRowFullWithSameSymbol(thirdRow)) {
+    if (this.isRowFullWithSameSymbol(thirdRow)) {
       return this.TileAt(thirdRow, firstColumn)!.Symbol;
     }
 
     return emptyPlay;
   }
 
-  private isRowFull(row: number) {
-    return (
-      this.TileAt(row, firstColumn)!.isNotEmpty &&
-      this.TileAt(row, secondColumn)!.isNotEmpty &&
-      this.TileAt(row, thirdColumn)!.isNotEmpty
-    );
-  }
+  public isRowFullWithSameSymbol(row: number): boolean {
+    const firstTile = this.TileAt(row, firstColumn);
+    const secondTile = this.TileAt(row, secondColumn);
+    const thirdTile = this.TileAt(row, thirdColumn);
 
-  private isRowFullWithSameSymbol(row: number) {
-    return (
-      this.TileAt(row, firstColumn)!.hasSameSymbolAs(this.TileAt(row, secondColumn)!) &&
-      this.TileAt(row, thirdColumn)!.hasSameSymbolAs(this.TileAt(row, secondColumn)!)
-    );
+    return firstTile.isNotEmpty && 
+           firstTile.hasSameSymbolAs(secondTile) && 
+           secondTile.hasSameSymbolAs(thirdTile);
   }
 }
+
+
