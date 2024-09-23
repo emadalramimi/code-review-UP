@@ -1,11 +1,11 @@
 /* eslint-disable */
 
-const firstRow = 0;
-const secondRow = 1;
-const thirdRow = 2;
-const firstColumn = 0;
-const secondColumn = 1;
-const thirdColumn = 2;
+const row0 = 0;
+const row1 = 1;
+const row2 = 2;
+const col0 = 0;
+const col1 = 1;
+const col2 = 2;
 
 const playerO = 'O';
 const emptyPlay = ' ';
@@ -14,7 +14,7 @@ export class Game {
   private _lastSymbol = emptyPlay;
   private _board: Board = new Board();
 
-  public Play(symbol: string, x: number, y: number): void {
+  public makeMove(symbol: string, x: number, y: number): void {
     this.validateFirstMove(symbol);
     this.validatePlayer(symbol);
     this.validatePositionIsEmpty(x, y);
@@ -92,8 +92,8 @@ class Board {
   private _plays: Tile[] = [];
 
   constructor() {
-    for (let x = firstRow; x <= thirdRow; x++) {
-      for (let y = firstColumn; y <= thirdColumn; y++) {
+    for (let x = row0; x <= row2; x++) {
+      for (let y = col0; y <= col2; y++) {
         this._plays.push(new Tile(x, y, emptyPlay));
       }
     }
@@ -110,16 +110,16 @@ class Board {
   }
 
   public findRowFullWithSamePlayer(): string {
-    if (this.isRowFull(firstRow) && this.isRowFullWithSameSymbol(firstRow)) {
-      return this.TileAt(firstRow, firstColumn)!.Symbol;
+    if (this.isRowFull(row0) && this.isRowFullWithSameSymbol(row0)) {
+      return this.TileAt(row0, col0)!.Symbol;
     }
 
-    if (this.isRowFull(secondRow) && this.isRowFullWithSameSymbol(secondRow)) {
-      return this.TileAt(secondRow, firstColumn)!.Symbol;
+    if (this.isRowFull(row1) && this.isRowFullWithSameSymbol(row1)) {
+      return this.TileAt(row1, col0)!.Symbol;
     }
 
-    if (this.isRowFull(thirdRow) && this.isRowFullWithSameSymbol(thirdRow)) {
-      return this.TileAt(thirdRow, firstColumn)!.Symbol;
+    if (this.isRowFull(row2) && this.isRowFullWithSameSymbol(row2)) {
+      return this.TileAt(row2, col0)!.Symbol;
     }
 
     return emptyPlay;
@@ -127,16 +127,16 @@ class Board {
 
   private isRowFull(row: number) {
     return (
-      this.TileAt(row, firstColumn)!.isNotEmpty &&
-      this.TileAt(row, secondColumn)!.isNotEmpty &&
-      this.TileAt(row, thirdColumn)!.isNotEmpty
+      this.TileAt(row, col0)!.isNotEmpty &&
+      this.TileAt(row, col1)!.isNotEmpty &&
+      this.TileAt(row, col2)!.isNotEmpty
     );
   }
 
   private isRowFullWithSameSymbol(row: number) {
     return (
-      this.TileAt(row, firstColumn)!.hasSameSymbolAs(this.TileAt(row, secondColumn)!) &&
-      this.TileAt(row, thirdColumn)!.hasSameSymbolAs(this.TileAt(row, secondColumn)!)
+      this.TileAt(row, col0)!.hasSameSymbolAs(this.TileAt(row, col1)!) &&
+      this.TileAt(row, col2)!.hasSameSymbolAs(this.TileAt(row, col1)!)
     );
   }
 }
